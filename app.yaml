@@ -5,6 +5,10 @@ api_version: 1
 threadsafe: yes
 
 handlers:
+# test page
+- url: /index.html
+  static_files: AsyncChat.html
+  upload: AsyncChat.html
 
 # static link
 - url: /fonts
