@@ -6,6 +6,8 @@ function getMediaSuccess(stream) {
   console.log("Get Audio source success")
 
   audioInput = audioContext.createMediaStreamSource(stream);
+
+  audioRecorder = new Recorder(audioInput);
 }
 
 function getMediaFail(error) {
@@ -29,11 +31,14 @@ function initRecorder() {
   }
 }
 
-function startRecording() {
+function startRecording(btn) {
   console.log("start log");
+  if (!audioRecorder) {
+    return;
+  }
 }
 
-function stopRecording() {
+function stopRecording(btn) {
   console.log("stop log");
 }
 

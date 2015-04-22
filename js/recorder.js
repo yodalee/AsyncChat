@@ -9,4 +9,20 @@ var Recorder = function(source) {
       this.context, bufferSize, numOfInputChannels, numOfOutputChannels);
 
   var recording = false;
+
+  this.node.onaudioprocess = function(e) {
+    if (!recording) {
+      return;
+    }
+  }
+
+  this.record = function() {
+    recording = true;
+  }
+
+  this.stop = function() {
+    recording = false;
+  }
+
+  source.connect(this.node);
 }
