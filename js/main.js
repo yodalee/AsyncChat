@@ -36,10 +36,13 @@ function startRecording(btn) {
   if (!audioRecorder) {
     return;
   }
+  audioRecorder.clear();
+  audioRecorder.record();
 }
 
 function stopRecording(btn) {
   console.log("stop log");
+  audioRecorder.stop();
 }
 
 window.onload = initRecorder();
