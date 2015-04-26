@@ -31,7 +31,7 @@ function initRecorder() {
   }
 }
 
-function startRecording(btn) {
+function startRecording() {
   console.log("start log");
   if (!audioRecorder) {
     return;
@@ -40,9 +40,14 @@ function startRecording(btn) {
   audioRecorder.record();
 }
 
-function stopRecording(btn) {
+function stopRecording() {
   console.log("stop log");
   audioRecorder.stop();
 }
 
-window.onload = initRecorder();
+function initAudio() {
+  console.log("ask audio permission");
+  initRecorder();
+}
+
+window.onload = initAudio();
