@@ -14,6 +14,9 @@ this.onmessage = function(e) {
     case 'clear':
       clear();
       break;
+    case 'getBuffers':
+      getBuffers();
+      break;
   }
 }
 
@@ -32,3 +35,21 @@ function clear(){
   recBuffersL = [];
   recBuffersR = [];
 }
+
+function getBuffers() {
+  var buffers = [];
+  buffers.push( convertBufferToFloat32(bufLeft, length) );
+  buffers.push( convertBufferToFloat32(bufRight, length) );
+  this.postMessage(buffers);
+}
+
+function convertBufferToFloat32(buffers, length) {
+  var result = new Float32Array(length);
+  var offset = 0;
+  for (var i = 0; i < buffers.length; i++){
+    result.set(buffers[i], offset);
+    offset += buffers[i].length;
+  }
+  return result;
+}
+

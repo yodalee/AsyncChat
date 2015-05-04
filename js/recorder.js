@@ -45,6 +45,14 @@ var Recorder = function(source) {
     })
   }
 
+  this.prepareDownload = function() {
+    worker.postMessage({ command: 'getBuffers' })
+  }
+
+  worker.onmessage = function(e) {
+    var blob = e.data;
+  }
+
   source.connect(this.node);
   this.node.connect(this.context.destination);
 }

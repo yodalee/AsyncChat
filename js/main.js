@@ -89,11 +89,16 @@ function startRecording() {
 function stopRecording() {
   console.log("stop log");
   audioRecorder.stop();
+  audioRecorder.prepareDownload();
 }
 
 function initAudio() {
   console.log("ask audio permission");
   initRecorder();
+}
+
+function downloadAudio() {
+  console.log("download audio");
 }
 
 window.onload = initAudio();
