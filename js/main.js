@@ -2,12 +2,26 @@ var audioContext = new AudioContext();
 var audioInput = null;
 var audioRecorder = null;
 
+var analyserContext = null;
+
 function getMediaSuccess(stream) {
   console.log("Get Audio source success")
 
   audioInput = audioContext.createMediaStreamSource(stream);
 
+  analyserNode = audioContext.createAnalyser();
+  analyserNode.fftSize = 2048;
+
+  audioInput.connect(analyserNode);
+
   audioRecorder = new Recorder(audioInput);
+
+  updateAnalysers();
+}
+
+function updateAnalysers(time) {
+  if (!analyserContext) {
+  }
 }
 
 function getMediaFail(error) {
