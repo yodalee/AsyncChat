@@ -8,9 +8,12 @@
 </head>
 <body>
   <h1>AsyncChat</h1>
-  <hr>
   <input type="button" value="Get Audio" onclick="initAudio()"></br>
   <input type="button" value="Start Record" onclick="startRecording()">
   <input type="button" value="Stop Record" onclick="stopRecording()">
+  <hr>
+  <div id="visualizer">
+    <canvas id="analyser" width=1024" height="100">Analyser</canvas>
+  </div>
 </body>
 </html>
