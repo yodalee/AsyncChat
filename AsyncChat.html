@@ -11,6 +11,9 @@
   <input type="button" value="Get Audio" onclick="initAudio()"></br>
   <input type="button" value="Start Record" onclick="startRecording()">
   <input type="button" value="Stop Record" onclick="stopRecording()">
+  <br/>
+  <input type="button" id="download" disabled="true" value="Download" onclick="downloadAudio()">
+  <input type="button" id="upload" disabled="true" value="Upload" onclick="uploadAudio()">
   <hr>
   <div id="visualizer">
     <canvas id="analyser" width=1024" height="100">Analyser</canvas>

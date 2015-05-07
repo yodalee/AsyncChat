@@ -50,7 +50,12 @@ var Recorder = function(source) {
   }
 
   worker.onmessage = function(e) {
-    var blob = e.data;
+    switch (e.data.command) {
+      case 'getBuffers':
+        document.getElementById("download").disabled = false;
+        document.getElementById("upload").disabled = false;
+        break;
+    }
   }
 
   source.connect(this.node);

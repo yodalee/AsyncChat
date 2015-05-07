@@ -82,6 +82,8 @@ function startRecording() {
   if (!audioRecorder) {
     return;
   }
+  document.getElementById("download").disabled = true;
+  document.getElementById("upload").disabled = true;
   audioRecorder.clear();
   audioRecorder.record();
 }
@@ -99,6 +101,10 @@ function initAudio() {
 
 function downloadAudio() {
   console.log("download audio");
+}
+
+function uploadAudio() {
+  console.log("upload audio");
 }
 
 window.onload = initAudio();

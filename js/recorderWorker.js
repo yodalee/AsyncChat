@@ -40,7 +40,10 @@ function getBuffers() {
   var buffers = [];
   buffers.push( convertBufferToFloat32(bufLeft, length) );
   buffers.push( convertBufferToFloat32(bufRight, length) );
-  this.postMessage(buffers);
+  this.postMessage({
+    command: 'getBuffers',
+    payload: buffers
+  });
 }
 
 function convertBufferToFloat32(buffers, length) {
