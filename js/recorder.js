@@ -54,7 +54,13 @@ var Recorder = function(source) {
       case 'getBuffers':
         document.getElementById("download").disabled = false;
         document.getElementById("upload").disabled = false;
+        worker.postMessage({command: 'exportWAV'});
         break;
+      case 'exportWAV':
+        var url = (window.URL || window.webkitURL).createObjectURL(e.data.payload);
+        var link = document.getElementById("download");
+        link.href = url;
+        link.download = 'output.wav';
     }
   }
 
