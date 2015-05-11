@@ -82,6 +82,8 @@ function startRecording() {
   if (!audioRecorder) {
     return;
   }
+  document.getElementById("download").disabled = true;
+  document.getElementById("upload").disabled = true;
   audioRecorder.clear();
   audioRecorder.record();
 }
@@ -89,6 +91,7 @@ function startRecording() {
 function stopRecording() {
   console.log("stop log");
   audioRecorder.stop();
+  audioRecorder.prepareDownload();
 }
 
 function initAudio() {

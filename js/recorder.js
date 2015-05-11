@@ -45,6 +45,25 @@ var Recorder = function(source) {
     })
   }
 
+  this.prepareDownload = function() {
+    worker.postMessage({ command: 'getBuffers' })
+  }
+
+  worker.onmessage = function(e) {
+    switch (e.data.command) {
+      case 'getBuffers':
+        document.getElementById("download").disabled = false;
+        document.getElementById("upload").disabled = false;
+        worker.postMessage({command: 'exportWAV'});
+        break;
+      case 'exportWAV':
+        var url = (window.URL || window.webkitURL).createObjectURL(e.data.payload);
+        var link = document.getElementById("download");
+        link.href = url;
+        link.download = 'output.wav';
+    }
+  }
+
   source.connect(this.node);
   this.node.connect(this.context.destination);
 }
