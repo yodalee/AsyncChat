@@ -5,11 +5,6 @@ api_version: 1
 threadsafe: yes
 
 handlers:
-# test page
-- url: /index.html
-  static_files: AsyncChat.html
-  upload: AsyncChat.html
-
 # static link
 - url: /fonts
   static_dir: fonts
@@ -20,6 +15,12 @@ handlers:
 - url: /js
   static_dir: js
 
+# test page
+- url: /.*
+  script: recorder.app
+
 libraries:
 - name: webapp2
   version: "2.5.2"
+- name: jinja2
+  version: "2.6"
