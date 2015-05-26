@@ -34,9 +34,9 @@ function record(inputBuffer) {
 }
 
 function clear(){
-  recLength = 0;
-  recBuffersL = [];
-  recBuffersR = [];
+  length = 0;
+  bufLeft = [];
+  bufRight = [];
 }
 
 function getBuffers() {
