@@ -1,4 +1,17 @@
+var blob;
+var xmlhttp;
+
 var Recorder = function(source) {
+  // initial ajax request
+  // it's weird it puts here
+  xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function() {
+    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+      document.getElementById("testDiv").innerHTML=xmlhttp.responseText;
+      console.log(xmlhttp.responseText);
+    }
+  }
+
   var bufferSize = 4096;
   var numOfInputChannels = 2;
   var numOfOutputChannels = 2;
@@ -49,6 +62,18 @@ var Recorder = function(source) {
     worker.postMessage({ command: 'getBuffers' })
   }
 
+  this.upload = function() {
+    // prepare base64 string
+    var reader = new FileReader();
+    reader.readAsDataURL(blob);
+    reader.onloadend = function() {
+      //TODO: find a better way to get the base64 string
+      //this method only work if header is contant: data:audio/wav;base64,
+      xmlhttp.open("POST", "upload?file=" + reader.result.slice(22), true);
+      xmlhttp.send();
+    }
+  }
+
   worker.onmessage = function(e) {
     switch (e.data.command) {
       case 'getBuffers':
@@ -57,7 +82,9 @@ var Recorder = function(source) {
         worker.postMessage({command: 'exportWAV'});
         break;
       case 'exportWAV':
-        var url = (window.URL || window.webkitURL).createObjectURL(e.data.payload);
+        blob = e.data.payload;
+
+        var url = (window.URL || window.webkitURL).createObjectURL(blob);
         var link = document.getElementById("download");
         link.href = url;
         link.download = 'output.wav';

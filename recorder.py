@@ -19,6 +19,12 @@ class MainPage(webapp2.RequestHandler):
         self.response.write(template.render())
 
 
+class UploadHandler(webapp2.RequestHandler):
+    def post(self):
+        data = self.request.get("file")
+        print(data)
+
 app = webapp2.WSGIApplication([
     ('/index.html', MainPage),
+    ('/upload', UploadHandler),
 ], debug=True)
