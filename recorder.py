@@ -3,6 +3,7 @@ import os
 
 import webapp2
 import jinja2
+import base64
 
 from google.appengine.ext.webapp import util
 
@@ -21,8 +22,12 @@ class MainPage(webapp2.RequestHandler):
 
 class UploadHandler(webapp2.RequestHandler):
     def post(self):
-        data = self.request.get("file")
+        data = self.request.get("file").replace(" ", "+")
         print(data)
+        try:
+            decoded = base64.b64decode(data)
+        except ValueError:
+            pass
 
 app = webapp2.WSGIApplication([
     ('/index.html', MainPage),
