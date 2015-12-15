@@ -99,4 +99,8 @@ function initAudio() {
   initRecorder();
 }
 
+function upload() {
+  console.log("upload audio");
+}
+
 window.onload = initAudio();
