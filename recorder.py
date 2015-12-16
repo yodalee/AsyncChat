@@ -1,11 +1,13 @@
 
 import os
+import base64
 
 import webapp2
 import jinja2
-import base64
 
 from google.appengine.ext.webapp import util
+
+from datastore import RecordFile
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -23,11 +25,15 @@ class MainPage(webapp2.RequestHandler):
 class UploadHandler(webapp2.RequestHandler):
     def post(self):
         data = self.request.get("file").replace(" ", "+")
-        print(data)
         try:
             decoded = base64.b64decode(data)
+            recordFile = RecordFile(
+                    content=decoded,
+                    )
+            retrieveKey = recordFile.put()
+            self.response.write(retrieveKey)
         except ValueError:
-            pass
+            self.response.write("Cannot decode the wav file, record again")
 
 app = webapp2.WSGIApplication([
     ('/index.html', MainPage),
