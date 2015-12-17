@@ -48,9 +48,9 @@ class GetAudio(webapp2.RequestHandler):
 
 class UploadHandler(webapp2.RequestHandler):
     def post(self):
-        data = self.request.get("file").replace(" ", "+")
+        print(self.request.body)
         try:
-            decoded = base64.b64decode(data)
+            decoded = base64.b64decode(self.request.body)
             recordFile = RecordFile(
                     content=decoded,
                     )
