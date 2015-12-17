@@ -69,8 +69,8 @@ var Recorder = function(source) {
     reader.onloadend = function() {
       //TODO: find a better way to get the base64 string
       //this method only work if header is contant: data:audio/wav;base64,
-      xmlhttp.open("POST", "upload?file=" + reader.result.slice(22), true);
-      xmlhttp.send();
+      xmlhttp.open("POST", "upload", true);
+      xmlhttp.send(reader.result.slice(22));
     }
   }
 
