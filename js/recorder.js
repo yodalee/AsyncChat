@@ -7,7 +7,8 @@ var Recorder = function(source) {
   xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function() {
     if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-      document.getElementById("testDiv").innerHTML=xmlhttp.responseText;
+      document.getElementById("testDiv").innerHTML=
+        '<a href=play?key=' + xmlhttp.responseText + '>Sound Link</a>';
       console.log(xmlhttp.responseText);
     }
   }
