@@ -8,6 +8,8 @@ var canvasWidth, canvasHeight;
 
 // status register
 var recordTimer;
+var countdownTime = 60; // 60 seconds
+var countdown;
 
 function getMediaSuccess(stream) {
   console.log("Get Audio source success")
@@ -95,7 +97,10 @@ function startRecording() {
   audioRecorder.record();
 
   // Allow user record 60,000 milliseconds.
-  recordTimer = window.setTimeout(stopRecording, 60000);
+  // timer function reduce countdown by one every second
+  // and stop record when countdown reach 0
+  countdown = countdownTime;
+  recordTimer = window.setInterval(timer, 1000);
 }
 
 function stopRecording() {
@@ -115,6 +120,7 @@ function stopRecording() {
 
   // Clear timer
   window.clearTimeout(recordTimer);
+  document.getElementById("timer").innerHTML = "";
 }
 
 function initAudio() {
@@ -125,6 +131,15 @@ function initAudio() {
 function upload() {
   console.log("upload audio");
   audioRecorder.upload();
+}
+
+function timer() {
+  if (countdown <= 0) {
+    stopRecording();
+    return;
+  }
+  document.getElementById("timer").innerHTML = countdown;
+  countdown = countdown - 1;
 }
 
 window.onload = initAudio();
