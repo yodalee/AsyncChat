@@ -78,8 +78,6 @@ var Recorder = function(source) {
   worker.onmessage = function(e) {
     switch (e.data.command) {
       case 'getBuffers':
-        document.getElementById("download").disabled = false;
-        document.getElementById("upload").disabled = false;
         worker.postMessage({command: 'exportWAV'});
         break;
       case 'exportWAV':

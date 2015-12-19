@@ -6,6 +6,9 @@ var audioRecorder = null;
 var analyserContext = null;
 var canvasWidth, canvasHeight;
 
+// status register
+var recordTimer;
+
 function getMediaSuccess(stream) {
   console.log("Get Audio source success")
 
@@ -82,16 +85,36 @@ function startRecording() {
   if (!audioRecorder) {
     return;
   }
+  // Disable buttons
   document.getElementById("download").disabled = true;
   document.getElementById("upload").disabled = true;
+  document.getElementById("start").disabled = true;
+
+  // Clear buffer and start Record
   audioRecorder.clear();
   audioRecorder.record();
+
+  // Allow user record 60,000 milliseconds.
+  recordTimer = window.setTimeout(stopRecording, 60000);
 }
 
 function stopRecording() {
   console.log("stop log");
+  if (!audioRecorder) {
+    return;
+  }
+
+  // Enable buttons
+  document.getElementById("download").disabled = false;
+  document.getElementById("upload").disabled = false;
+  document.getElementById("start").disabled = false;
+
+  // Stop record and prepare download file
   audioRecorder.stop();
   audioRecorder.prepareDownload();
+
+  // Clear timer
+  window.clearTimeout(recordTimer);
 }
 
 function initAudio() {
