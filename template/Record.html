@@ -38,19 +38,34 @@
 
   <!-- content -->
   <div class="container">
-    <h1>AsyncChat</h1>
-    <input type="button" value="Get Audio" onclick="initAudio()"></br>
-    <input id="start" type="button" value="Start Record" onclick="startRecording()">
-    <input id="stop" type="button" value="Stop Record" onclick="stopRecording()">
-    <br/>
-    <a href="" id="download">Download</a><br />
-    <input id="upload" type="button" value="Upload" onclick="upload()">
-    <hr>
-    <span id="timer"></span>
-    <div id="visualizer">
-      <canvas id="analyser" width=1024" height="100">Analyser</canvas>
-    </div>
-    <div id="testDiv">
+    <div class="text-center">
+      <h1>AsyncChat</h1>
+      <h1><small>Share your voice as easy as typing.</small></h1>
+      <input type="button" value="Get Audio" onclick="initAudio()"></br>
+      <input id="start" type="button" value="Start Record" onclick="startRecording()">
+      <input id="stop" type="button" value="Stop Record" onclick="stopRecording()">
+      <br/>
+      <a href="" id="download">Download</a><br />
+      <input id="upload" type="button" value="Upload" onclick="upload()">
+      <hr>
+      <span id="timer"></span>
+
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <h3 class="panel-title">status</h3>
+        </div>
+        <div class="panel-body" id="statusLog">
+          XDD
+        </div>
+      </div>
+
+      <div id="testDiv">
+      </div>
+
+      <div id="visualizer">
+        <canvas id="analyser" width=1024" height="100">Analyser</canvas>
+      </div>
+
     </div>
   </div>
 </body>
