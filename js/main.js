@@ -11,8 +11,10 @@ var recordTimer;
 var countdownTime = 60; // 60 seconds
 var countdown;
 
+var statusLog = null;
+
 function getMediaSuccess(stream) {
-  console.log("Get Audio source success")
+  updateLog("Get Audio source success");
 
   audioInput = audioContext.createMediaStreamSource(stream);
 
@@ -62,12 +64,12 @@ function updateAnalysers(time) {
 }
 
 function getMediaFail(error) {
-  console.log("Error: Unable to get audio");
+  updateLog("Error: Unable to get audio");
   console.log(error);
 }
 
 function initRecorder() {
-  console.log("initial Audio");
+  updateLog("Initial Audio...");
 
   try {
     window.Audio.Context = window.AudioContext || window.webkitAudioContext;
@@ -78,15 +80,15 @@ function initRecorder() {
 
     navigator.getUserMedia({audio: true}, getMediaSuccess, getMediaFail);
   } catch (e) {
-    console.log("No web audio support in this browser");
+    updateLog("No web audio support in the browser");
   }
 }
 
 function startRecording() {
-  console.log("start log");
   if (!audioRecorder) {
     return;
   }
+  updateLog("Start Recording...");
   // Disable buttons
   document.getElementById("download").disabled = true;
   document.getElementById("upload").disabled = true;
@@ -104,7 +106,7 @@ function startRecording() {
 }
 
 function stopRecording() {
-  console.log("stop log");
+  updateLog("Stop recording");
   if (!audioRecorder) {
     return;
   }
@@ -124,12 +126,12 @@ function stopRecording() {
 }
 
 function initAudio() {
-  console.log("ask audio permission");
+  statusLog = document.getElementById("statusLog")
   initRecorder();
 }
 
 function upload() {
-  console.log("upload audio");
+  updateLog("uploading audio...")
   audioRecorder.upload();
 }
 
@@ -142,4 +144,9 @@ function timer() {
   countdown = countdown - 1;
 }
 
-window.onload = initAudio();
+function updateLog(text) {
+  console.log(text);
+  statusLog.innerHTML += (text + "</br>");
+}
+
+window.onload = initAudio;

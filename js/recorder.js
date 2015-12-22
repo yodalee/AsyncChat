@@ -10,6 +10,7 @@ var Recorder = function(source) {
       document.getElementById("testDiv").innerHTML=
         '<a href=play?key=' + xmlhttp.responseText + '>Sound Link</a>';
       console.log(xmlhttp.responseText);
+      updateLog("Upload success");
     }
   }
 
