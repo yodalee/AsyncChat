@@ -23,8 +23,8 @@ var Recorder = function(source) {
       this.context.createJavaScriptNode).call(
       this.context, bufferSize, numOfInputChannels, numOfOutputChannels);
 
-  var worker = new Worker("js/recorderWorker.js");
-  worker.postMessage({
+  var recorderWorker = new Worker("js/recorderWorker.js");
+  recorderWorker.postMessage({
     command: 'init',
     payload: {
       sampleRate: this.context.sampleRate,
@@ -35,7 +35,7 @@ var Recorder = function(source) {
     if (!recording) {
       return;
     }
-    worker.postMessage({
+    recorderWorker.postMessage({
       command: 'record',
       payload: [
         e.inputBuffer.getChannelData(0),
@@ -55,13 +55,13 @@ var Recorder = function(source) {
   }
 
   this.clear = function() {
-    worker.postMessage({
+    recorderWorker.postMessage({
       command: 'clear'
     })
   }
 
   this.prepareDownload = function() {
-    worker.postMessage({ command: 'getBuffers' })
+    recorderWorker.postMessage({ command: 'getBuffers' })
   }
 
   this.upload = function() {
@@ -76,10 +76,10 @@ var Recorder = function(source) {
     }
   }
 
-  worker.onmessage = function(e) {
+  recorderWorker.onmessage = function(e) {
     switch (e.data.command) {
       case 'getBuffers':
-        worker.postMessage({command: 'exportWAV'});
+        recorderWorker.postMessage({command: 'exportWAV'});
         break;
       case 'exportWAV':
         blob = e.data.payload;
