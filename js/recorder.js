@@ -24,11 +24,18 @@ var Recorder = function(source) {
       this.context, bufferSize, numOfInputChannels, numOfOutputChannels);
 
   var recorderWorker = new Worker("js/recorderWorker.js");
+  var encoderWorker = new Worker("js/encoderWorker.js");
+
   recorderWorker.postMessage({
     command: 'init',
     payload: {
       sampleRate: this.context.sampleRate,
     }
+  });
+
+  encoderWorker.postMessage({
+    command: 'init',
+    payload: {},
   });
 
   this.node.onaudioprocess = function(e) {
@@ -83,11 +90,19 @@ var Recorder = function(source) {
         break;
       case 'exportWAV':
         blob = e.data.payload;
+        encoderWorker.postMessage({command: 'encodeMP3', payload: e.data.payload})
+    }
+  }
 
+  encoderWorker.onmessage = function(e) {
+    switch (e.data.command) {
+      case 'encodeMP3':
+        blob = e.data.payload;
         var url = (window.URL || window.webkitURL).createObjectURL(blob);
         var link = document.getElementById("download");
         link.href = url;
         link.download = 'output.wav';
+        break;
     }
   }
 
