@@ -97,13 +97,18 @@ var Recorder = function(source) {
   encoderWorker.onmessage = function(e) {
     switch (e.data.command) {
       case 'encodeMP3':
-        blob = e.data.payload;
+        console('encode done');
+        blob = new Blob([new Uint8Array(e.data.payload)], {type: 'audio/mp3'});
+
         var url = (window.URL || window.webkitURL).createObjectURL(blob);
         var link = document.getElementById("download");
         link.href = url;
         link.download = 'output.wav';
         break;
     }
+  }
+
+  this.convertToMP3 = function() {
   }
 
   source.connect(this.node);
